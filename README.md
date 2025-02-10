@@ -247,4 +247,4 @@ curl -v -X POST \
 
 ---
 
-Built with ❤️ by [Your Name] 
+Built with ❤️ by Osman aka bendarte
