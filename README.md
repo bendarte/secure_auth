@@ -177,6 +177,74 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Session management dashboard
 - Security event logging
 
+## 🧪 Testing
+
+### Quick Start Testing
+Want to test if everything is working? Just run:
+```bash
+# 1. Make the script executable (one-time setup)
+chmod +x scripts/test-auth.sh
+
+# 2. Run the tests
+./scripts/test-auth.sh
+```
+
+You'll see a colorful output showing each step:
+- 🔑 Getting CSRF Token
+- 👤 Registering a test user
+- 🔓 Logging in
+- 🔒 Logging out
+
+### Test Credentials
+The script uses these default test credentials:
+```
+Email: test@example.com
+Password: TestPassword123
+Name: Test User
+```
+
+### What's Being Tested?
+1. **CSRF Protection**
+   - Fetches CSRF token
+   - Includes token in requests
+   - Validates token handling
+
+2. **User Management**
+   - Creates new user account
+   - Validates login credentials
+   - Handles logout properly
+
+3. **Security Features**
+   - HTTP-Only cookies
+   - Secure session handling
+   - Token management
+
+### Troubleshooting
+If the tests fail, check:
+1. Is the auth server running? (should be on port 3001)
+2. Are all environment variables set?
+3. Check the logs in `server-auth/logs/` for details
+
+### Manual Testing
+You can also test manually using tools like:
+- The web interface at http://localhost:3003
+- Postman (API collection included in `/docs`)
+- curl commands (examples below)
+
+#### Example curl Commands
+```bash
+# Get CSRF Token
+curl -v -c cookies.txt -b cookies.txt http://localhost:3001/csrf-token
+
+# Register (replace TOKEN with your CSRF token)
+curl -v -X POST \
+  -c cookies.txt -b cookies.txt \
+  -H "Content-Type: application/json" \
+  -H "X-CSRF-Token: TOKEN" \
+  -d '{"email":"test@example.com","password":"TestPassword123","name":"Test User"}' \
+  http://localhost:3001/auth/register
+```
+
 ---
 
 Built with ❤️ by [Your Name] 
